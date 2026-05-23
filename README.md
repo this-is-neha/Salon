@@ -181,10 +181,3 @@ http://localhost:9006/api-docs
 ```
 
 ---
-
-# ⚠️ Important Notes
-
-- Never commit your `.env` file
-- Use `.env.example` for sharing environment structure
-- Ensure PostgreSQL and Redis are running before starting the server
-- Regenerate secrets if credentials are exposed
