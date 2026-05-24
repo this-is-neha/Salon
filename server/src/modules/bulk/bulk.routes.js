@@ -21,10 +21,14 @@ const upload = multer({ storage: multer.memoryStorage() });
  *               file:
  *                 type: string
  *                 format: binary
+ *               templateId:
+ *                 type: string
+ *                 description: The ID of the template to use for this import
  *     responses:
  *       202:
  *         description: Import process initiated
  */
+
 bulkRoute.post(
   '/upload', 
   socketMiddleware, 

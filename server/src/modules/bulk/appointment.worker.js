@@ -71,7 +71,7 @@ const worker = new Worker('bulk-appointments', async (job) => {
         await db.query('INSERT INTO appointment_logs (batch_id, recipient_email, status, error_message) VALUES ($1, $2, $3, $4)', 
             [batchId, customerEmail, 'failed', err.message]);
 
-        // Emit Failure
+       
         getIO().emit('appointment-status-update', { 
             batchId, 
             status: 'failed', 

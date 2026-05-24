@@ -98,6 +98,7 @@ export default function BulkUploadPage() {
                 </thead>
                 <tbody>
                   <tr className="text-center">
+                    
                     <td className="border p-2">Neha Shah</td>
                     <td className="border p-2">neha@example.com</td>
                     <td className="border p-2">Haircut</td>
