@@ -143,9 +143,15 @@ http://localhost:9006/api-docs
 # 6. 🚀 Running the Application
 
 ## Install Dependencies
-
+Backend
 ```bash
 npm install
+```
+
+---
+Frontend
+```bash
+yarn add [package-name]
 ```
 
 ---
