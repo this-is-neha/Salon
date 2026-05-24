@@ -4,7 +4,7 @@ const { getTemplates } = require("./template.controller");
 const  authenticate  = require("../../middleware/auth.middleware"); 
 /**
  * @swagger
- * /templates:
+ * /notification/templates:
  *   get:
  *     summary: Get all templates
  *     tags:

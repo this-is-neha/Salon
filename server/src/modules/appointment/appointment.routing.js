@@ -1,27 +1,58 @@
-
 const express = require("express");
 const appointmentRoute = express.Router();
 
 const appointmentCtrl = require("./appointment.controller");
 const authMiddleware = require("../../middleware/user.middleware");
-const roleCheck = require("../../middleware/role.middleware"); 
+const roleCheck = require("../../middleware/role.middleware");
+
 /**
  * @swagger
- * /appointments:
+ * /appointment:
  *   post:
  *     summary: Create appointment
  *     tags:
  *       - Appointments
  *     security:
  *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - customer_id
+ *               - service_id
+ *               - start_time
+ *               - end_time
+ *             properties:
+ *               customer_id:
+ *                 type: string
+ *                 example: "6528a198-d9c3-42da-a143-0d475dfcc57a"
+ *               service_id:
+ *                 type: string
+ *                 example: "5aacd80d-d59c-49f0-984c-63b97f3446ad"
+ *               start_time:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2026-05-24T10:00:00Z"
+ *               end_time:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2026-05-24T11:00:00Z"
+ *               status:
+ *                 type: string
+ *                 enum: [pending, confirmed, cancelled, completed]
+ *                 example: "pending"
  *     responses:
  *       201:
  *         description: Appointment created
  */
 appointmentRoute.post("/", authMiddleware, appointmentCtrl.create);
+
 /**
  * @swagger
- * /appointments:
+ * /appointment:
  *   get:
  *     summary: Get all appointments
  *     tags:
@@ -33,9 +64,10 @@ appointmentRoute.post("/", authMiddleware, appointmentCtrl.create);
  *         description: List of appointments
  */
 appointmentRoute.get("/", authMiddleware, appointmentCtrl.listAll);
+
 /**
  * @swagger
- * /appointments/{id}:
+ * /appointment/{id}:
  *   patch:
  *     summary: Update appointment
  *     tags:
@@ -48,14 +80,55 @@ appointmentRoute.get("/", authMiddleware, appointmentCtrl.listAll);
  *         required: true
  *         schema:
  *           type: string
+ *         example: "a12b34c5-d678-90ef-gh12-345678ijklmn"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               start_time:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2026-05-24T12:00:00Z"
+ *               end_time:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2026-05-24T13:00:00Z"
+ *               status:
+ *                 type: string
+ *                 enum: [pending, confirmed, cancelled, completed]
+ *                 example: "confirmed"
  *     responses:
  *       200:
  *         description: Appointment updated
  */
 appointmentRoute.patch("/:id", authMiddleware, appointmentCtrl.update);
+
+// /**
+//  * @swagger
+//  * /appointment/{id}:
+//  *   patch:
+//  *     summary: Update appointment
+//  *     tags:
+//  *       - Appointments
+//  *     security:
+//  *       - bearerAuth: []
+//  *     parameters:
+//  *       - in: path
+//  *         name: id
+//  *         required: true
+//  *         schema:
+//  *           type: string
+//  *     responses:
+//  *       200:
+//  *         description: Appointment updated
+//  */
+// appointmentRoute.patch("/:id", authMiddleware, appointmentCtrl.update);
 /**
  * @swagger
- * /appointments/{id}:
+ * /appointment/{id}:
  *   delete:
  *     summary: Delete appointment
  *     tags:
@@ -72,10 +145,14 @@ appointmentRoute.patch("/:id", authMiddleware, appointmentCtrl.update);
  *       200:
  *         description: Appointment deleted
  */
-appointmentRoute.delete("/:id", authMiddleware, appointmentCtrl.deleteAppointment);
+appointmentRoute.delete(
+  "/:id",
+  authMiddleware,
+  appointmentCtrl.deleteAppointment,
+);
 /**
  * @swagger
- * /appointments/admin/all:
+ * /appointment/admin/all:
  *   get:
  *     summary: Get all appointments (Admin only)
  *     tags:
@@ -88,10 +165,15 @@ appointmentRoute.delete("/:id", authMiddleware, appointmentCtrl.deleteAppointmen
  *       403:
  *         description: Forbidden (not admin)
  */
-appointmentRoute.get("/admin/all",authMiddleware,roleCheck("admin"),appointmentCtrl.listAll);
+appointmentRoute.get(
+  "/admin/all",
+  authMiddleware,
+  roleCheck("admin"),
+  appointmentCtrl.listAll,
+);
 /**
  * @swagger
- * /appointments/customer/{customerId}:
+ * /appointment/customer/{customerId}:
  *   get:
  *     summary: Get appointments by customer ID
  *     tags:
@@ -111,6 +193,10 @@ appointmentRoute.get("/admin/all",authMiddleware,roleCheck("admin"),appointmentC
  *       404:
  *         description: No appointments found
  */
-appointmentRoute.get("/customer/:customerId",authMiddleware,appointmentCtrl.getByCustomer);
+appointmentRoute.get(
+  "/customer/:customerId",
+  authMiddleware,
+  appointmentCtrl.getByCustomer,
+);
 
 module.exports = appointmentRoute;

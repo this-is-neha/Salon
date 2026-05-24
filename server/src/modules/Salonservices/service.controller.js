@@ -16,7 +16,6 @@ create = async (req, res, next) => {
         duration_minutes: parseInt(duration_minutes),
       });
 
-      // Fixed status code typo to 201
       return res.status(201).json({
         result: newService,
         message: "Salon service created successfully.",

@@ -14,9 +14,9 @@ const socketMiddleware = (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Normalize user object (IMPORTANT FIX)
+  
     req.user = {
-      id: decoded.sub,     // 👈 FIX: map sub → id
+      id: decoded.sub,     
       role: decoded.role,
     };
 

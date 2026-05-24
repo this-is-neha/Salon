@@ -116,10 +116,10 @@ register = async (req, res, next) => {
         );
       }
 
-      // Perform activation parameters adjustments in DB
+    
       await authSvc.activateUserAccount(associatedUser.id, token);
 
-      // INSTANT REDIRECT: Sends the user directly to the frontend login page upon click!
+
       return res.redirect(`${process.env.FRONTEND_URL}/login?activated=true`);
     } catch (exception) {
       console.error("Error in activation flow sequence", exception);
@@ -179,7 +179,7 @@ register = async (req, res, next) => {
           let token = req.headers["authorization"] || req.headers["x-access-token"];
           
           if (!token) {
-              // Instead of throwing and relying on a global handler, return a direct 401 response
+           
               return res.status(401).json({ status: false, message: "Authorization token required." });
           }
   
